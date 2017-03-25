@@ -13,33 +13,62 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="503.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.0" prefWidth="503.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.registerController">
     <children>
-        <Label alignment="CENTER" layoutX="217.0" layoutY="489.0" text="Developed By: 1+1=10" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-        <VBox layoutX="80.0" layoutY="60.0" prefHeight="402.0" prefWidth="343.0">
+        <VBox alignment="TOP_CENTER" layoutX="80.0" layoutY="60.0" prefHeight="457.0" prefWidth="343.0" styleClass="background" stylesheets="@../css/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <TextField fx:id="usernameText" promptText="Username">
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </TextField>
-            <Label text="Available" textFill="#3b9716">
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="503.0" styleClass="label-bright-new" text="SignUp" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="27.0" />
+               </font>
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" top="5.0" />
+                  <Insets bottom="40.0" top="20.0" />
                </VBox.margin>
+            </Label>
+            <HBox maxWidth="1.7976931348623157E308" prefWidth="200.0">
+               <children>
+                      <TextField fx:id="username" promptText="Username" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                      </TextField>
+                  <Button fx:id="checkButton" mnemonicParsing="false" onAction="#checkHandle" text="Check">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Label fx:id="checkLabel" text="Available" textFill="#3b9716" visible="false">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-                <PasswordField fx:id="passwordText" promptText="Password" />
-            <ComboBox prefHeight="31.0" prefWidth="351.0" promptText="Branch">
+            <TextField fx:id="name" promptText="Name">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+                <PasswordField fx:id="password" promptText="Password">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </VBox.margin></PasswordField>
+            <TextField fx:id="confirmpassword" promptText="Confirm Password">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <ComboBox fx:id="branch" prefHeight="31.0" prefWidth="300.0" promptText="Branch" styleClass="filler">
                <VBox.margin>
                   <Insets bottom="20.0" top="20.0" />
                </VBox.margin>
             </ComboBox>
             <HBox alignment="CENTER" prefHeight="38.0" prefWidth="343.0">
                <children>
-                  <RadioButton mnemonicParsing="false" text="Male">
+                  <RadioButton fx:id="male" mnemonicParsing="false" selected="true" text="Male">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -47,33 +76,32 @@
                         <ToggleGroup fx:id="gender" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Female" toggleGroup="$gender">
+                  <RadioButton fx:id="female" mnemonicParsing="false" text="Female" toggleGroup="$gender">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Preffered not to say" toggleGroup="$gender" />
+                  <RadioButton fx:id="other" mnemonicParsing="false" text="Preffered not to say" toggleGroup="$gender" />
                </children>
             </HBox>
-            <ComboBox prefHeight="31.0" prefWidth="345.0" promptText="Year">
+            <TextField fx:id="email" promptText="E-mail">
                <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </ComboBox>
-            <TextField promptText="E-mail">
-               <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="Mobile">
+            <TextField fx:id="mobile" promptText="Mobile">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </VBox.margin>
             </TextField>
+              <Button fx:id="loginButton" mnemonicParsing="false" onAction="#registerHandle" prefHeight="31.0" prefWidth="96.0" text="Register">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+              <Label fx:id="invalidLabel" text="Invalid Credential" textFill="#d31e1e" visible="false" />
+              <Label alignment="CENTER" text="Developed By: 1+1=10" />
             </children>
         </VBox>
-        <Button fx:id="loginButton" layoutX="204.0" layoutY="479.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="96.0" text="Login" />
-        <Label fx:id="invalidLabel" layoutX="194.0" layoutY="524.0" text="Invalid Credential" textFill="#d31e1e" />
-      <Button layoutX="431.0" layoutY="81.0" mnemonicParsing="false" text="Check" />
     </children>
 </AnchorPane>

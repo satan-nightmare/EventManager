@@ -1,13 +1,15 @@
 package application;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class loginController {
     private Main main;
@@ -19,32 +21,34 @@ public class loginController {
     private Button loginButton;
     @FXML
     private Label invalidLabel;
+    public Packet sent,received;
 
     @FXML
-    public void loginPressed(){
+    public void loginHandle(){
         if(usernameText.getText()=="" || passwordText.getText()=="")
             invalidLabel.setVisible(true);  //show error on empty field login
         else{
-            Packet sent=new Packet();
-            sent.operation="login";
-            sent.s1=usernameText.getText();
-            sent.s2=passwordText.getText();
-            Packet received=main.request(sent); //Here we got response from server
+             login();
             if(received.response){
-                //Sending new packet to get user information
-                Packet p1=new Packet();
-                p1.operation="userInfo";
-                p1.s1=sent.s1;
-                main.setUser(main.request(p1)); //Setting same in static variable in mainController class
-                //Sending new packet to get list of venues
-                Packet p2=new Packet();
-                p2.operation="venueList";
-                Packet venueList=main.request(p2); //Main.request(sent);
+                main.username=received.s1;
+                getUserInfo();
+                getVenueList();
+                 //Main.request(sent);
                 //Sending new packet to get list of user events
                 Packet p3=new Packet();
                 p3.operation="userEvents";
                 Packet userEvents=null; //Main.request(p3); //Main.request(sent);
-                Stage stage = (Stage) loginbtn.getScene().getWindow(); //selecting current window
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/fxml/main.fxml"));
+                try {
+                    AnchorPane root = loader.load();
+                    mainController controller = loader.getController();
+                    controller.setMain(main);
+                    main.primaryStage.setScene(new Scene(root));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                /*Stage stage = (Stage) loginbtn.getScene().getWindow(); //selecting current window
                 stage.close();  //then closing it
                 try { //here opening new main window
                     Stage primaryStage=new Stage();
@@ -60,7 +64,7 @@ public class loginController {
                     primaryStage.show();
                 } catch(Exception e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
             }else{
@@ -68,6 +72,45 @@ public class loginController {
             }
         }
     }
+
+    @FXML
+    public void registerHandle() throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("Register");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../resources/fxml/register.fxml"));
+        AnchorPane root = loader.load();
+        registerController controller = loader.getController();
+        controller.setMain(main,stage);
+//        stage.setScene(new Scene(root));
+//        stage.show();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(usernameText.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    private void login(){
+        sent=new Packet();
+        sent.operation="login";
+        sent.s1=usernameText.getText();
+        sent.s2=passwordText.getText();
+        received=main.request(sent);
+    }
+
+    private void getUserInfo(){
+        sent=new Packet();
+        sent.operation="userinfo";
+        sent.s1=received.s1;
+        main.user = main.request(sent);
+    }
+
+    private void getVenueList(){
+        sent = new Packet();
+        sent.operation="venuelist";
+        main.venueList=main.request(sent).list;
+    }
+
     public void setMain(Main main){
         this.main=main;
     }

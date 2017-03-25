@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -19,7 +20,9 @@ public class Main extends Application {
     ObjectOutputStream oos;
     public String username;
     public boolean admin;
-    private Packet user;
+    public Packet user;
+    public Packet received;
+    public List<String> venueList;
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Parent root = FXMLLoader.load(getClass().getResource("../resources/fxml/connect.fxml"));
@@ -66,7 +69,7 @@ public class Main extends Application {
             System.out.println("Problem in sending Packet");
         }
         System.out.println("Packet sent");
-        Packet received= null;
+
         try {
             received = (Packet)ois.readObject();
         } catch (IOException e) {
@@ -92,6 +95,7 @@ public class Main extends Application {
         AnchorPane root = loader.load();
         loginController controller = loader.getController();
         controller.setMain(this);
+        primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root));
         //primaryStage.show();
     }

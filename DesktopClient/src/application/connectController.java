@@ -27,6 +27,7 @@ public class connectController {
             }else
                 invalidLabel.setText("Cannot connect/Invalid IP");
         }
+        invalidLabel.setVisible(true);
     }
 
     public void setMain(Main main){
